@@ -27,7 +27,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 {
 	NSString* callbackID;
 }
-@end
 
 @property (nonatomic, retain) NSString* callbackID;
 
