@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    id="com.phonegap.ImageFilter"
+    version="1.0.0">
+    
+    <name>ImageFilter</name>
+    
+    <description>
+        ImageFilter plugin for iOS, forked from https://github.com/DrewDahlman/ImageFilter
+    </description>
+    
+    <license>MIT</license>
+    
+    <engines>
+        <engine name="cordova" version=">=3.0.0"/>
+    </engines>
+    
+    <js-module src="www/ImageFilter.js" name="ImageFilter">
+        <clobbers target="window.plugins.ImageFilter" />
+    </js-module>
+    
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ImageFilter">
+                <param name="ios-package" value="ImageFilter"/>
+            </feature>
+        </config-file>
+        
+        <header-file src="src/ios/ImageFilter.h" />
+        <source-file src="src/ios/ImageFilter.m" />
+    </platform>
+</plugin>
