@@ -5,9 +5,9 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 var ImageFilter = function () {};
 
 ImageFilter.prototype.clean = function (options) {
-
-    cordova.exec("ImageFilter.clean");
+    cordova.exec(null, null, "ImageFilter", "clean", [options]);
 };
+
 ImageFilter.prototype.none = function (done,options) {
     //console.log(options+" "+done);
     var defaults = {
@@ -20,6 +20,7 @@ ImageFilter.prototype.none = function (done,options) {
 
     return cordova.exec(done,null,"ImageFilter","none",[defaults]);
 };
+
 ImageFilter.prototype.sunnySide = function (done,options) {
     var defaults = {
         image: '',
@@ -30,6 +31,7 @@ ImageFilter.prototype.sunnySide = function (done,options) {
     }
     return cordova.exec(done,null,"ImageFilter","sunnySide",[defaults]);
 };
+
 ImageFilter.prototype.worn = function (done,options) {
     var defaults = {
         image: '',
@@ -40,6 +42,7 @@ ImageFilter.prototype.worn = function (done,options) {
     }
    	return cordova.exec(done,null,"ImageFilter","worn",[defaults]);
 };
+
 ImageFilter.prototype.vintage = function (done,options) {
     var defaults = {
         image: '',
@@ -50,6 +53,7 @@ ImageFilter.prototype.vintage = function (done,options) {
     }
     return cordova.exec(done,null,"ImageFilter","vintage",[defaults]);
 };
+
 ImageFilter.prototype.stark = function (done,options) {
     var defaults = {
         image: '',
@@ -60,9 +64,14 @@ ImageFilter.prototype.stark = function (done,options) {
     }
     return cordova.exec(done,null,"ImageFilter","stark",[defaults]);
 };
-PhoneGap.addConstructor(function () {
-    if(!window.plugins) {
-        window.plugins = {};
-    }
-    window.plugins.ImageFilter = new ImageFilter();
-});
+
+ImageFilter.install = function () {
+  if (!window.plugins) {
+    window.plugins = {};
+  }
+
+  window.plugins.ImageFilter = new ImageFilter();
+  return window.plugins.ImageFilter;
+};
+
+cordova.addConstructor(ImageFilter.install);
