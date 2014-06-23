@@ -355,11 +355,11 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                          nil];
     CIImage *outputImageB = [filterB outputImage];
     
-    NSString *framePath = 
+    /*NSString *framePath = 
     [[NSBundle mainBundle] pathForResource:@"vintage" ofType:@"png"];
     NSURL *framePathName = [NSURL fileURLWithPath:framePath];
     
-    /*CIImage *frameImg = 
+    CIImage *frameImg = 
     [CIImage imageWithContentsOfURL:framePathName];
     
     CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
@@ -369,7 +369,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CIImage *outputImageD = [filterD outputImage];*/
     
     CGImageRef cgimg = 
-    [context createCGImage:outputImageC fromRect:[outputImageC extent]];
+    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
     NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
