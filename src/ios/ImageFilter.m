@@ -117,7 +117,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)stark:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
-    
+    NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+	
     NSString *filePath = [options objectForKey:@"image"];
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
@@ -163,18 +164,23 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CGImageRelease(cgimg);
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    self.callbackID = [arguments pop];
+    /*self.callbackID = [arguments pop];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];
+                                                messageAsString:filePathB];*/
     
     /* Create JS to call the success function with the result */
-    NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
+   // NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
     /* Output the script */
-    [self writeJavascript:successScript];
+    //[self writeJavascript:successScript];
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 -(void)sunnySide:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
+	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
@@ -196,7 +202,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                         nil];
     CIImage *outputImageB = [filterB outputImage];
     
-    NSString *bgPath = 
+    /*NSString *bgPath = 
     [[NSBundle mainBundle] pathForResource:@"painter" ofType:@"png"];
     NSURL *bgPathName = [NSURL fileURLWithPath:bgPath];
     
@@ -207,10 +213,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                                    keysAndValues: kCIInputImageKey, bgIMG, 
                          @"inputBackgroundImage",outputImageB,
                          nil];
-    CIImage *outputImageD = [filterD outputImage];
+    CIImage *outputImageD = [filterD outputImage];*/
     
     CGImageRef cgimg = 
-    [context createCGImage:outputImageD fromRect:[outputImageD extent]];
+    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
     NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
@@ -234,15 +240,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CGImageRelease(cgimg);
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    self.callbackID = [arguments pop];
+    /*self.callbackID = [arguments pop];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];
+                                                messageAsString:filePathB];*/
     
     /* Create JS to call the success function with the result */
-    NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
+    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
     /* Output the script */
-    [self writeJavascript:successScript];
+    //[self writeJavascript:successScript];
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     
 }
 -(void)worn:(CDVInvokedUrlCommand*)command;
@@ -323,6 +332,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)vintage:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
+	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
@@ -348,17 +359,17 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     [[NSBundle mainBundle] pathForResource:@"vintage" ofType:@"png"];
     NSURL *framePathName = [NSURL fileURLWithPath:framePath];
     
-    CIImage *frameImg = 
+    /*CIImage *frameImg = 
     [CIImage imageWithContentsOfURL:framePathName];
     
     CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
                                    keysAndValues: kCIInputImageKey, frameImg, 
                          @"inputBackgroundImage",outputImageB,
                          nil];
-    CIImage *outputImageD = [filterD outputImage];
+    CIImage *outputImageD = [filterD outputImage];*/
     
     CGImageRef cgimg = 
-    [context createCGImage:outputImageD fromRect:[outputImageD extent]];
+    [context createCGImage:outputImageC fromRect:[outputImageC extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
     NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
@@ -382,15 +393,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CGImageRelease(cgimg);
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    self.callbackID = [arguments pop];
+    /*self.callbackID = [arguments pop];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];
+                                                messageAsString:filePathB];*/
     
     /* Create JS to call the success function with the result */
-    NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
+    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
     /* Output the script */
-    [self writeJavascript:successScript];
+    //[self writeJavascript:successScript];
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 // CAMERA ROLL SAVER
