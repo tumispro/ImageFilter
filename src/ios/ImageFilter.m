@@ -159,13 +159,9 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     NSString *save = [options objectForKey:@"save"];
     NSLog(@"SAVED: %@",save);
     if([save isEqualToString:@"true"]){
-	
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	
-        //UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
-    //CGImageRelease(cgimg);
+    CGImageRelease(cgimg);
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
     /*self.callbackID = [arguments pop];
@@ -178,8 +174,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     /* Output the script */
     //[self writeJavascript:successScript];
 	
-	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 -(void)sunnySide:(CDVInvokedUrlCommand*)command;
 {
@@ -391,10 +387,12 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     NSString *save = [options objectForKey:@"save"];
     NSLog(@"SAVED: %@",save);
     if([save isEqualToString:@"true"]){
-        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        //UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
     
-    CGImageRelease(cgimg);
+    //CGImageRelease(cgimg);
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
     /*self.callbackID = [arguments pop];
@@ -407,8 +405,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     /* Output the script */
     //[self writeJavascript:successScript];
 	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
 }
 
 // CAMERA ROLL SAVER
