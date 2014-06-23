@@ -247,6 +247,9 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)worn:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
