@@ -256,17 +256,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
-    
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+   
 	
-    /*CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
                                   keysAndValues: kCIInputImageKey, beginImage, 
                         @"inputColor",[CIColor colorWithRed:212 green:235 blue:241 alpha:1],
                         nil];
     CIImage *outputImage = [filter outputImage];
     
-    CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+    /*CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
                                    keysAndValues: kCIInputImageKey, outputImage, 
                          @"inputSaturation", [NSNumber numberWithFloat:.6],
                          @"inputContrast", [NSNumber numberWithFloat:1], 
