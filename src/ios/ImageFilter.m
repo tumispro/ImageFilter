@@ -257,7 +257,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
     
-    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+    /*CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
                                   keysAndValues: kCIInputImageKey, beginImage, 
                         @"inputColor",[CIColor colorWithRed:212 green:235 blue:241 alpha:1],
                         nil];
@@ -296,10 +299,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
 	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
-	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory */
 	
 	/*
     int r = arc4random() % 5000;
