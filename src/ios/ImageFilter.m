@@ -264,10 +264,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                         nil];
     CIImage *outputImage = [filter outputImage];
     
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	
-    /*CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
+    CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
                                    keysAndValues: kCIInputImageKey, outputImage, 
                          @"inputSaturation", [NSNumber numberWithFloat:.6],
                          @"inputContrast", [NSNumber numberWithFloat:1], 
@@ -281,7 +278,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                          nil];
     CIImage *outputImageC = [filterC outputImage];
     
-    NSString *framePath = 
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+    /*NSString *framePath = 
     [[NSBundle mainBundle] pathForResource:@"vignette4" ofType:@"png"];
     NSURL *framePathName = [NSURL fileURLWithPath:framePath];
     
