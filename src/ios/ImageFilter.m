@@ -245,13 +245,14 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     [self writeJavascript:successScript];
     
 }
--(void)worn:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+-(void)worn:(CDVInvokedUrlCommand*)command;
 {
+	NSString* echo = @"Testing";
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:echo];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
     // FILTER
-    NSString *filePath = [options objectForKey:@"image"];
+    /*NSString *filePath = [options objectForKey:@"image"];
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
     CIImage *beginImage = 
@@ -312,18 +313,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     if([save isEqualToString:@"true"]){
         UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
-    CGImageRelease(cgimg);
+    CGImageRelease(cgimg);*/
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    self.callbackID = [arguments pop];
+    /*self.callbackID = [arguments pop];
     
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];
+                                                messageAsString:filePathB];*/
     
     /* Create JS to call the success function with the result */
-    NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
+    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
     /* Output the script */
-    [self writeJavascript:successScript];
+    //[self writeJavascript:successScript];
     
 }
 -(void)vintage:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
