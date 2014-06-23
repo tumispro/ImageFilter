@@ -278,8 +278,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                          nil];
     CIImage *outputImageC = [filterC outputImage];
     
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
     /*NSString *framePath = 
     [[NSBundle mainBundle] pathForResource:@"vignette4" ofType:@"png"];
@@ -292,15 +290,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                                    keysAndValues: kCIInputImageKey, frameImg, 
                          @"inputBackgroundImage",outputImageC,
                          nil];
-    CIImage *outputImageD = [filterD outputImage];
+    CIImage *outputImageD = [filterD outputImage];*/
     
     CGImageRef cgimg = 
-    [context createCGImage:outputImageD fromRect:[outputImageD extent]];
+    [context createCGImage:outputImageC fromRect:[outputImageC extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
 	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory */
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
 	/*
     int r = arc4random() % 5000;
