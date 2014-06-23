@@ -115,7 +115,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     
 }
--(void)stark:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+-(void)stark:(CDVInvokedUrlCommand*)command;
 {
     NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 	
@@ -177,7 +177,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
--(void)sunnySide:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+-(void)sunnySide:(CDVInvokedUrlCommand*)command;
 {
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
@@ -330,7 +330,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
--(void)vintage:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+-(void)vintage:(CDVInvokedUrlCommand*)command;
 {
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
