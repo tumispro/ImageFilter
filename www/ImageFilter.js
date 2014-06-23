@@ -8,7 +8,7 @@ ImageFilter.prototype.clean = function (options) {
     cordova.exec(null, null, "ImageFilter", "clean", [options]);
 };
 
-ImageFilter.prototype.none = function (done,options) {
+ImageFilter.prototype.none = function (done, error, options) {
     //console.log(options+" "+done);
     var defaults = {
         image: '',
@@ -18,10 +18,10 @@ ImageFilter.prototype.none = function (done,options) {
         if(typeof options[key] !== "undefined") defaults[key] = options[key];
     }
 
-    return cordova.exec(done,null,"ImageFilter","none",[defaults]);
+    return cordova.exec(done,error,"ImageFilter","none",[defaults]);
 };
 
-ImageFilter.prototype.sunnySide = function (done,options) {
+ImageFilter.prototype.sunnySide = function (done, error, options) {
     var defaults = {
         image: '',
         save: '',
@@ -29,10 +29,10 @@ ImageFilter.prototype.sunnySide = function (done,options) {
     for(var key in defaults) {
         if(typeof options[key] !== "undefined") defaults[key] = options[key];
     }
-    return cordova.exec(done,null,"ImageFilter","sunnySide",[defaults]);
+    return cordova.exec(done, error, "ImageFilter","sunnySide",[defaults]);
 };
 
-ImageFilter.prototype.worn = function (done,options) {
+ImageFilter.prototype.worn = function (done, error ,options) {
     var defaults = {
         image: '',
         save: '',
@@ -40,10 +40,10 @@ ImageFilter.prototype.worn = function (done,options) {
     for(var key in defaults) {
         if(typeof options[key] !== "undefined") defaults[key] = options[key];
     }
-   	return cordova.exec(done,null,"ImageFilter","worn",[defaults]);
+   	return cordova.exec(done,error,"ImageFilter","worn",[defaults]);
 };
 
-ImageFilter.prototype.vintage = function (done,options) {
+ImageFilter.prototype.vintage = function (done,error,options) {
     var defaults = {
         image: '',
         save: '',
@@ -51,10 +51,10 @@ ImageFilter.prototype.vintage = function (done,options) {
     for(var key in defaults) {
         if(typeof options[key] !== "undefined") defaults[key] = options[key];
     }
-    return cordova.exec(done,null,"ImageFilter","vintage",[defaults]);
+    return cordova.exec(done,error,"ImageFilter","vintage",[defaults]);
 };
 
-ImageFilter.prototype.stark = function (done,options) {
+ImageFilter.prototype.stark = function (done,error,options) {
     var defaults = {
         image: '',
         save: '',
@@ -62,7 +62,7 @@ ImageFilter.prototype.stark = function (done,options) {
     for(var key in defaults) {
         if(typeof options[key] !== "undefined") defaults[key] = options[key];
     }
-    return cordova.exec(done,null,"ImageFilter","stark",[defaults]);
+    return cordova.exec(done,error,"ImageFilter","stark",[defaults]);
 };
 
 ImageFilter.install = function () {
