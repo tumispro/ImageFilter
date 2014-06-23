@@ -298,6 +298,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
 	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+	/*
     int r = arc4random() % 5000;
 	NSString *random = [NSString stringWithFormat:@"%d", r];
 	NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"worn"];
@@ -317,7 +321,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     //self.callbackID = command.callbackId;
     
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId]; 
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId]; */
 }
 -(void)vintage:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
 {
