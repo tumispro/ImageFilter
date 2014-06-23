@@ -341,12 +341,23 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
-    CIImage *beginImage = 
+    /*CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
-    CIContext *context = [CIContext contextWithOptions:nil];
-    
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    CIContext *context = [CIContext contextWithOptions:nil];*/
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	if ([fileManager fileExistsAtPath:fileNameAndPath]){ 
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:fileNameAndPath];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
+	else
+	{  
+		NSString *pathForFile = @"test";
+		
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:pathForFile];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
 }
 
 // CAMERA ROLL SAVER
