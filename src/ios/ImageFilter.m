@@ -336,77 +336,17 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
+	
+	
+	
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
     
-    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
-                                  keysAndValues: kCIInputImageKey, beginImage, 
-                        @"inputColor",[CIColor colorWithRed:121 green:195 blue:219 alpha:1],
-                        nil];
-    CIImage *outputImage = [filter outputImage];
-    
-    CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
-                                   keysAndValues: kCIInputImageKey, outputImage, 
-                         @"inputSaturation", [NSNumber numberWithFloat:.6],
-                         @"inputContrast", [NSNumber numberWithFloat:1.1], 
-                         nil];
-    CIImage *outputImageB = [filterB outputImage];
-    
-    /*NSString *framePath = 
-    [[NSBundle mainBundle] pathForResource:@"vintage" ofType:@"png"];
-    NSURL *framePathName = [NSURL fileURLWithPath:framePath];
-    
-    CIImage *frameImg = 
-    [CIImage imageWithContentsOfURL:framePathName];
-    
-    CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
-                                   keysAndValues: kCIInputImageKey, frameImg, 
-                         @"inputBackgroundImage",outputImageB,
-                         nil];
-    CIImage *outputImageD = [filterD outputImage];*/
-    
-    CGImageRef cgimg = 
-    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
-    UIImage *newImg = [UIImage imageWithCGImage:cgimg];
-    
-    NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
-	
-    int r = arc4random() % 5000;
-	NSString *random = [NSString stringWithFormat:@"%d", r];
-	NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
-	NSString *tPathB = [tPathA stringByAppendingString:random];
-	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
-    
-    [imageData writeToFile:filePathB atomically:YES];
-    
-    NSString *save = [options objectForKey:@"save"];
-    NSLog(@"SAVED: %@",save);
-    if([save isEqualToString:@"true"]){
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-        //UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
-    }
-    
-    //CGImageRelease(cgimg);
-    
-    // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    /*self.callbackID = [arguments pop];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];*/
-    
-    /* Create JS to call the success function with the result */
-    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
-    /* Output the script */
-    //[self writeJavascript:successScript];
-	
-	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePath];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 // CAMERA ROLL SAVER
