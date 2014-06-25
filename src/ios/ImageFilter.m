@@ -14,8 +14,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
 #import "ImageFilter.h"
 
-#import <UIKit/UIKit.h>
 #import <CoreImage/CoreImage.h>
+#import <UIKit/UIKit.h>
 
 @implementation ImageFilter 
 
@@ -356,21 +356,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
-    
-	
-	/* new test stuff */
-	
-	CIFilter *invertColour = [CIFilter filterWithName:@"CIColorInvert" keysAndValues:@"inputImage", beginImage, nil];
-	CIImage *filteredImage = [invertColour outputImage];
-	CIContext *context = [CIContext contextWithOptions:nil]; 
-	CGImageRef cgImage = [context createCGImage:filteredImage fromRect:[filteredImage extent]];
-	UIImage *newImg = [UIImage imageWithCGImage:cgImage];
-	UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
-	CGImageRelease(cgImage);
-	
-	/* end new test stuff */
-	
-	/*CIContext *context = [CIContext contextWithOptions:nil];
+    CIContext *context = [CIContext contextWithOptions:nil];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
                                   keysAndValues: kCIInputImageKey, beginImage, 
@@ -383,14 +369,19 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                          @"inputSaturation", [NSNumber numberWithFloat:.6],
                          @"inputContrast", [NSNumber numberWithFloat:1.1], 
                          nil];
-    CIImage *outputImageB = [filterB outputImage];*/
+    CIImage *outputImageB = [filterB outputImage];
     
-    /*CGImageRef cgimg = 
+    CGImageRef cgimg = 
     [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
     NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myString];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+	/*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
 	
     int r = arc4random() % 5000;
@@ -422,9 +413,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
-	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"nope"];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 // CAMERA ROLL SAVER
