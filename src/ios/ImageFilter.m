@@ -14,8 +14,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
 #import "ImageFilter.h"
 
-#import <CoreImage/CoreImage.h>
 #import <UIKit/UIKit.h>
+#import <CoreImage/CoreImage.h>
 
 @implementation ImageFilter 
 
@@ -352,7 +352,20 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
-    NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
+	
+	BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
+	
+	if(fileExists) {
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"file exists"];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
+	else
+	{
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"file doesnt exist"];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
+	
+    /*NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
@@ -380,7 +393,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myString];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	
+	*/
 	/*NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
 	
