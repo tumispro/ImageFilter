@@ -4,8 +4,16 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
 var ImageFilter = function () {};
 
-ImageFilter.prototype.clean = function (options) {
-    cordova.exec(null, null, "ImageFilter", "clean", [options]);
+ImageFilter.prototype.clean = function (done, error, options) {
+	var defaults = {
+        image: '',
+        save: '',
+    };
+    for(var key in defaults) {
+        if(typeof options[key] !== "undefined") defaults[key] = options[key];
+    }
+	
+    return cordova.exec(done, error, "ImageFilter", "clean", [defaults]);
 };
 
 ImageFilter.prototype.none = function (done, error, options) {

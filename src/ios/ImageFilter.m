@@ -22,8 +22,16 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 @synthesize callbackID;
 
 // For clean up purposes sometimes the apps will cache images, so this cleans things up
--(void)clean:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options
+-(void)clean:(CDVInvokedUrlCommand*)command;
 {
+	NSString *result = @"Image = ";
+	
+	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+	NSString *filePath = [options objectForKey:@"image"];
+	
+	result = [result stringByAppendingString:filePath];
+	result = [result stringByAppendingString:@" , Directory = "];
+	
     // Path to the Documents directory
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     if ([paths count] > 0)
@@ -35,11 +43,15 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
         NSString *directory = [paths objectAtIndex:0];
         NSLog(@"Directory: %@", directory);
         
+		result = [result stringByAppendingString:directory];
         // For each file in the directory, create full path and delete the file
         for (NSString *file in [fileManager contentsOfDirectoryAtPath:directory error:&error])
         {    
             NSString *filePath = [directory stringByAppendingPathComponent:file];
             NSLog(@"File : %@", filePath);
+			
+			 result = [result stringByAppendingString:@" , File = "];
+			 result = [result stringByAppendingString:filePath];
             
             BOOL fileDeleted = [fileManager removeItemAtPath:filePath error:&error];
             
@@ -50,6 +62,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
         }
         
     }
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:result];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
     NSLog(@"CLEAN!");
 }
 
@@ -336,28 +352,75 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
-	
-	
-	
     NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
-    /*CIImage *beginImage = 
+    CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
-    CIContext *context = [CIContext contextWithOptions:nil];*/
+    CIContext *context = [CIContext contextWithOptions:nil];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+                                  keysAndValues: kCIInputImageKey, beginImage, 
+                        @"inputColor",[CIColor colorWithRed:121 green:195 blue:219 alpha:1],
+                        nil];
+    CIImage *outputImage = [filter outputImage];
+    
+    CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
+                                   keysAndValues: kCIInputImageKey, outputImage, 
+                         @"inputSaturation", [NSNumber numberWithFloat:.6],
+                         @"inputContrast", [NSNumber numberWithFloat:1.1], 
+                         nil];
+    CIImage *outputImageB = [filterB outputImage];
+    
+    /*NSString *framePath = 
+    [[NSBundle mainBundle] pathForResource:@"vintage" ofType:@"png"];
+    NSURL *framePathName = [NSURL fileURLWithPath:framePath];
+    
+    CIImage *frameImg = 
+    [CIImage imageWithContentsOfURL:framePathName];
+    
+    CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
+                                   keysAndValues: kCIInputImageKey, frameImg, 
+                         @"inputBackgroundImage",outputImageB,
+                         nil];
+    CIImage *outputImageD = [filterD outputImage];*/
+    
+    CGImageRef cgimg = 
+    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
+    UIImage *newImg = [UIImage imageWithCGImage:cgimg];
+    
+    NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
 	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
+    int r = arc4random() % 5000;
+	NSString *random = [NSString stringWithFormat:@"%d", r];
+	NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
+	NSString *tPathB = [tPathA stringByAppendingString:random];
+	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
+    
+    [imageData writeToFile:filePathB atomically:YES];
+    
+    NSString *save = [options objectForKey:@"save"];
+    NSLog(@"SAVED: %@",save);
+    if([save isEqualToString:@"true"]){
+        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+    }
+    
+    CGImageRelease(cgimg);
+    
+    // CALLBACK TO JAVASCRIPT WITH IMAGE URI
+    /*self.callbackID = [arguments pop];
+    
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
+                                                messageAsString:filePathB];*/
+    
+    /* Create JS to call the success function with the result */
+    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
+    /* Output the script */
+    //[self writeJavascript:successScript];
 	
-	if ([fileManager fileExistsAtPath:fileNameAndPath]){ 
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:fileNameAndPath];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
-	else
-	{  
-		NSString *pathForFile = @"test";
-		
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:pathForFile];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 // CAMERA ROLL SAVER
