@@ -353,21 +353,17 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
 	
-	BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
-	
-	if(fileExists) {
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"file exists"];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
-	else
-	{
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"file doesnt exist"];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
-	
-    /*NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
+    NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
     
-    CIImage *beginImage = 
+	NSData *frontViewData = [NSData dataWithContentsOfURL:fileNameAndPath];
+	UIImage *frontViewAlert = [UIImage imageWithData:frontViewData];
+	UIImageWriteToSavedPhotosAlbum(frontViewAlert, nil, nil, nil);
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"saved?"];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+	
+    /*CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
     
