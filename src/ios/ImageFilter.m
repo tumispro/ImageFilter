@@ -14,8 +14,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 
 #import "ImageFilter.h"
 
-#import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
+#import <CoreImage/CoreImage.h>
 
 @implementation ImageFilter 
 
@@ -356,7 +356,21 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
-    CIContext *context = [CIContext contextWithOptions:nil];
+    
+	
+	/* new test stuff */
+	
+	CIFilter *invertColour = [CIFilter filterWithName:@"CIColorInvert" keysAndValues:@"inputImage", beginImage, nil];
+	CIImage *filteredImage = [invertColour outputImage];
+	CIContext *context = [CIContext contextWithOptions:nil]; 
+	CGImageRef cgImage = [context createCGImage:filteredImage fromRect:[filteredImage extent]];
+	UIImage *newImg = [UIImage imageWithCGImage:cgImage];
+	UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
+	CGImageRelease(cgImage);
+	
+	/* end new test stuff */
+	
+	/*CIContext *context = [CIContext contextWithOptions:nil];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
                                   keysAndValues: kCIInputImageKey, beginImage, 
@@ -369,22 +383,9 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                          @"inputSaturation", [NSNumber numberWithFloat:.6],
                          @"inputContrast", [NSNumber numberWithFloat:1.1], 
                          nil];
-    CIImage *outputImageB = [filterB outputImage];
+    CIImage *outputImageB = [filterB outputImage];*/
     
-    /*NSString *framePath = 
-    [[NSBundle mainBundle] pathForResource:@"vintage" ofType:@"png"];
-    NSURL *framePathName = [NSURL fileURLWithPath:framePath];
-    
-    CIImage *frameImg = 
-    [CIImage imageWithContentsOfURL:framePathName];
-    
-    CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
-                                   keysAndValues: kCIInputImageKey, frameImg, 
-                         @"inputBackgroundImage",outputImageB,
-                         nil];
-    CIImage *outputImageD = [filterD outputImage];*/
-    
-    CGImageRef cgimg = 
+    /*CGImageRef cgimg = 
     [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
@@ -406,7 +407,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
         UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
     }
     
-    CGImageRelease(cgimg);
+    CGImageRelease(cgimg);*/
     
     // CALLBACK TO JAVASCRIPT WITH IMAGE URI
     /*self.callbackID = [arguments pop];
@@ -419,7 +420,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     /* Output the script */
     //[self writeJavascript:successScript];
 	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"nope"];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
