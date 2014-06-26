@@ -351,17 +351,17 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     NSString *filePath = [options objectForKey:@"image"];
 	
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *oDocumentsPath = [paths objectAtIndex:0];
+	//NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	//NSString *oDocumentsPath = [paths objectAtIndex:0];
 	
-	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
+	//oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
 	
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
-	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
-		//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
-		NSURL *imageURL = [NSURL fileURLWithPath:oDocumentsPath];
+	if ([fileManager fileExistsAtPath:filePath]){ 
+		NSURL *imageURL = [NSURL URLWithString:filePath];
+		//NSURL *imageURL = [NSURL fileURLWithPath:filePath];
 		//NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 		NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 		
