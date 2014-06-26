@@ -373,16 +373,49 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	//img name
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsPath = [paths objectAtIndex:0];
+	NSString *oDocumentsPath = [paths objectAtIndex:0];
 	
-	documentsPath = [documentsPath stringByAppendingString:filePath];
+	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
-	NSURL *imageURL = [NSURL URLWithString:documentsPath];
-	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-	UIImage *image = [UIImage imageWithData:imageData];
+	NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+	//NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+	
+	
+	
+	/* test filter */
+	
+	CIImage *beginImage = 
+    [CIImage imageWithContentsOfURL:imageURL];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+                                  keysAndValues: kCIInputImageKey, beginImage, 
+                        @"inputColor",[CIColor colorWithRed:121 green:195 blue:219 alpha:1],
+                        nil];
+    CIImage *outputImage = [filter outputImage];
+	
+	CGImageRef cgimg = 
+    [context createCGImage:outputImage fromRect:[outputImage extent]];
+    UIImage *newImg = [UIImage imageWithCGImage:cgimg];
+	
+	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+    
+	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
+	
+    int r = arc4random() % 5000;
+	NSString *random = [NSString stringWithFormat:@"%d", r];
+	NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
+	NSString *tPathB = [tPathA stringByAppendingString:random];
+	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
+    
+    [imageData writeToFile:filePathB atomically:YES];
+	
+	/* end */
+	
+	//UIImage *image = [UIImage imageWithData:imageData];
 	//UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 		
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:documentsPath];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
 	
