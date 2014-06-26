@@ -360,7 +360,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
-		NSURL *imageURL = [NSURL URLWithString:filePath];
+		NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
 		//NSURL *imageURL = [NSURL fileURLWithPath:filePath];
 		//NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 		NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
