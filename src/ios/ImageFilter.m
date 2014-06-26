@@ -13,6 +13,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 */
 
 #import "ImageFilter.h"
+#import "AssetsLibrary/AssetsLibrary.h";
 
 #import <UIKit/UIKit.h>
 #import <CoreImage/CoreImage.h>
@@ -348,7 +349,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)vintage:(CDVInvokedUrlCommand*)command;
 {
-	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+	/*NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
     // FILTER
     NSString *filePath = [options objectForKey:@"image"];
@@ -359,11 +360,38 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	UIImage *frontViewAlert = [UIImage imageWithData:frontViewData];
 	UIImageWriteToSavedPhotosAlbum(frontViewAlert, nil, nil, nil);
 	
-	NSString *str = @"data = ";
-	str = [str stringByAppendingString:[[NSString alloc] initWithData:frontViewData encoding:NSASCIIStringEncoding]];
+	//can check to see if data is there or not.
 	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:str];
+	NSString *str = @"data = ";
+	str = [str stringByAppendingString:[[NSString alloc] initWithData:frontViewData encoding:NSASCIIStringEncoding]];*/
+	
+	
+	//1. single image
+	//2. save image
+	//3. ?
+	
+	NSURL *imageURL = [NSURL URLWithString:@"http://www.picturesnew.com/media/images/image-background.jpg"];
+	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+	UIImage *image = [UIImage imageWithData:imageData];
+	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+		
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:frontViewData encoding:NSASCIIStringEncoding]];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	
+	
+	/*
+	ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];  
+	// Request to save the image to camera roll  
+	[library writeImageToSavedPhotosAlbum:[viewImage CGImage] orientation:(ALAssetOrientation)[viewImage imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){  
+		if (error) {  
+			NSLog(@"error");  
+		} else {  
+				NSLog(@"url %@", assetURL);  
+		}  
+	}];  
+	[library release];
+	*/
+	
 	
 	
     /*CIImage *beginImage = 
