@@ -370,12 +370,19 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	//3. ?
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     NSString *filePath = [options objectForKey:@"image"];
-	NSURL *imageURL = [NSURL URLWithString:filePath];
+	//img name
+	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *documentsPath = [paths objectAtIndex:0];
+	
+	documentsPath = [documentsPath stringByAppendingPathComponent:filePath]
+	
+	NSURL *imageURL = [NSURL URLWithString:documentsPath];
 	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 	UIImage *image = [UIImage imageWithData:imageData];
-	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+	//UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 		
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:imageData encoding:NSASCIIStringEncoding]];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:documentsPath];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
 	
