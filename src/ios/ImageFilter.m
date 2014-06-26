@@ -360,15 +360,17 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
-		NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
-		//NSURL *imageURL = [NSURL fileURLWithPath:filePath];
+		//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+		NSURL *imageURL = [NSURL fileURLWithPath:oDocumentsPath];
 		//NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 		NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 		
 		UIImage *image = [UIImage imageWithData:imageData];
 		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 	
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:imageData];
+		NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
+	
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myString];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}
 	else
