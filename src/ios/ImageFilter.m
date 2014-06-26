@@ -360,17 +360,45 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSFileManager *fileManager = [NSFileManager defaultManager];
 	
 	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
-		//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
 		NSURL *imageURL = [NSURL fileURLWithPath:oDocumentsPath];
-		//NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
-		NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 		
-		UIImage *image = [UIImage imageWithData:imageData];
-		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+		CIImage *beginImage = [CIImage imageWithContentsOfURL:imageURL];
+		CIContext *context = [CIContext contextWithOptions:nil];
+		
+		CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+									  keysAndValues: kCIInputImageKey, beginImage, 
+							@"inputColor",[CIColor colorWithRed:212 green:235 blue:241 alpha:1],
+							nil];
+		CIImage *outputImage = [filter outputImage];
+		
+		CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
+		UIImage *newImg = [UIImage imageWithCGImage:cgimg];
+		
+		UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
+		
+		NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+		
+		NSString *documentsPath = [paths objectAtIndex:0];
+		
+		int r = arc4random() % 5000;
+		NSString *random = [NSString stringWithFormat:@"%d", r];
+		NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
+		NSString *tPathB = [tPathA stringByAppendingString:random];
+		NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
+		
+		[imageData writeToFile:filePathB atomically:YES];
+		
+		
+		//NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+		
+		//UIImage *image = [UIImage imageWithData:imageData];
+		//UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 	
-		NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
+		//NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
 	
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:myString];
+		CGImageRelease(cgimg);
+	
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}
 	else
