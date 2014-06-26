@@ -377,8 +377,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
-	NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
-	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+	//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+	NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 	
 	UIImage *image = [UIImage imageWithData:imageData];
 	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
@@ -399,7 +399,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     [context createCGImage:outputImage fromRect:[outputImage extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
 	
-	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+	NSData *imageData2 = UIImageJPEGRepresentation(newImg,1.0);
     
 	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
 	
@@ -409,12 +409,12 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSString *tPathB = [tPathA stringByAppendingString:random];
 	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
     
-    [imageData writeToFile:filePathB atomically:YES];
+    [imageData2 writeToFile:filePathB atomically:YES];
 	
 	/* end */
 	
-	UIImage *image = [UIImage imageWithData:imageData];
-	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+	UIImage *image2 = [UIImage imageWithData:imageData2];
+	UIImageWriteToSavedPhotosAlbum(image2, nil, nil, nil);
 		
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
