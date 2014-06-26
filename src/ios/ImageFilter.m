@@ -375,7 +375,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *documentsPath = [paths objectAtIndex:0];
 	
-	documentsPath = [documentsPath stringByAppendingString:filePath]
+	documentsPath = [documentsPath stringByAppendingString:filePath];
 	
 	NSURL *imageURL = [NSURL URLWithString:documentsPath];
 	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
