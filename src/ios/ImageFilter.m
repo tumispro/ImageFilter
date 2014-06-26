@@ -377,15 +377,37 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
-	NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
+		//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+		NSURL *imageURL = [NSURL fileURLWithPath:oDocumentsPath];
+		//NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
+		NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+		
+		UIImage *image = [UIImage imageWithData:imageData];
+		UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+	
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:imageData];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
+	else
+	{
+		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"nope"];
+		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	}
+	
+	
+	/*NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
 	NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 	
 	UIImage *image = [UIImage imageWithData:imageData];
-	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);*/
 	
 	/* test filter */
 	
-	CIImage *beginImage = 
+	/*CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:imageURL];
     CIContext *context = [CIContext contextWithOptions:nil];
     
@@ -409,15 +431,15 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	NSString *tPathB = [tPathA stringByAppendingString:random];
 	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
     
-    [imageData2 writeToFile:filePathB atomically:YES];
+    [imageData2 writeToFile:filePathB atomically:YES];*/
 	
 	/* end */
 	
-	UIImage *image2 = [UIImage imageWithData:imageData2];
-	UIImageWriteToSavedPhotosAlbum(image2, nil, nil, nil);
+	/*UIImage *image2 = [UIImage imageWithData:imageData2];
+	UIImageWriteToSavedPhotosAlbum(image2, nil, nil, nil);*/
 		
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+	/*CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
 	
 	
 	/*
