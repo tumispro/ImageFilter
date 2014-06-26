@@ -368,8 +368,9 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	//1. single image
 	//2. save image
 	//3. ?
-	
-	NSURL *imageURL = [NSURL URLWithString:@"http://www.picturesnew.com/media/images/image-background.jpg"];
+	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+    NSString *filePath = [options objectForKey:@"image"];
+	NSURL *imageURL = [NSURL URLWithString:filePath];
 	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 	UIImage *image = [UIImage imageWithData:imageData];
 	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
