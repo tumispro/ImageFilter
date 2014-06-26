@@ -378,9 +378,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
 	NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
-	//NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+	NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
 	
-	
+	UIImage *image = [UIImage imageWithData:imageData];
+	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 	
 	/* test filter */
 	
@@ -412,8 +413,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	/* end */
 	
-	//UIImage *image = [UIImage imageWithData:imageData];
-	//UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+	UIImage *image = [UIImage imageWithData:imageData];
+	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 		
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
