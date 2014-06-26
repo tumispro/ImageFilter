@@ -359,7 +359,10 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	UIImage *frontViewAlert = [UIImage imageWithData:frontViewData];
 	UIImageWriteToSavedPhotosAlbum(frontViewAlert, nil, nil, nil);
 	
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"saved?"];
+	NSString *str = @"data = ";
+	str = [str stringByAppendingString:[[NSString alloc] initWithData:nsdata encoding:NSASCIIStringEncoding]];
+	
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:str];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
 	
