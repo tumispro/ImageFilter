@@ -377,7 +377,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
-	//NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
+	NSURL *imageURL = [NSURL URLWithString:oDocumentsPath];
 	NSData *imageData = [NSData dataWithContentsOfFile:oDocumentsPath];
 	
 	UIImage *image = [UIImage imageWithData:imageData];
@@ -386,7 +386,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	/* test filter */
 	
 	CIImage *beginImage = 
-    [CIImage imageWithContentsOfFile:oDocumentsPath];
+    [CIImage imageWithContentsOfURL:imageURL];
     CIContext *context = [CIContext contextWithOptions:nil];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
