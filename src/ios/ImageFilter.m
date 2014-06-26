@@ -386,7 +386,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	/* test filter */
 	
 	CIImage *beginImage = 
-    [CIImage imageWithContentsOfURL:imageURL];
+    [CIImage imageWithContentsOfFile:oDocumentsPath];
     CIContext *context = [CIContext contextWithOptions:nil];
     
     CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
