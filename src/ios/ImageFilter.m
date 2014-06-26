@@ -360,7 +360,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	UIImageWriteToSavedPhotosAlbum(frontViewAlert, nil, nil, nil);
 	
 	NSString *str = @"data = ";
-	str = [str stringByAppendingString:[[NSString alloc] initWithData:nsdata encoding:NSASCIIStringEncoding]];
+	str = [str stringByAppendingString:[[NSString alloc] initWithData:frontViewData encoding:NSASCIIStringEncoding]];
 	
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:str];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
