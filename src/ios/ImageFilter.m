@@ -13,7 +13,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 */
 
 #import "ImageFilter.h"
-#import "AssetsLibrary/AssetsLibrary.h";
 
 #import <UIKit/UIKit.h>
 #import <CoreImage/CoreImage.h>
@@ -375,7 +374,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	UIImage *image = [UIImage imageWithData:imageData];
 	UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
 		
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:frontViewData encoding:NSASCIIStringEncoding]];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:imageData encoding:NSASCIIStringEncoding]];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	
 	
