@@ -165,7 +165,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CIImage *outputImageB = [filterB outputImage];
     
     // convert the filtered image to a UIImage
-    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
+    CGImageRef cgimg = [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
 	// store the file in the docs directory
@@ -226,7 +226,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CIImage *outputImageB = [filterB outputImage];
     
     // convert the filtered image to a UIImage
-    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
+    CGImageRef cgimg = [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
 	// store the file in the docs directory
@@ -354,7 +354,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CIImage *outputImageB = [filterB outputImage];
     
     // convert the filtered image to a UIImage
-    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
+    CGImageRef cgimg = [context createCGImage:outputImageB fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
 	// store the file in the docs directory
