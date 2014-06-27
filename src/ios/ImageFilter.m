@@ -362,7 +362,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 							nil];
 		CIImage *outputImage = [filter outputImage];
 		
-		CGImageRef cgimgO = [context createCGImage:outputImage fromRect:[outputImage extent]];
+		CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
 		UIImage *newImg = [UIImage imageWithCGImage:cgimg];
 		
 		UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
