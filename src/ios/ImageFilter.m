@@ -341,6 +341,13 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 {
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     NSString *filePath = [options objectForKey:@"image"];
+	int w = [options objectForKey:@"width"];
+	int h = [options objectForKey:@"height"];
+	int x = [options objectForKey:@"x"];
+	int y = [options objectForKey:@"y"];
+	int rotation = [options objectForKey:@"rotation"];
+	
+	CGRect cropRect = CGRectMake(x, y, w, h);
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *oDocumentsPath = [paths objectAtIndex:0];
@@ -362,7 +369,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 							nil];
 		CIImage *outputImage = [filter outputImage];
 		
-		CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
+		CGImageRef cgimg = [context createCGImage:outputImage fromRect:cropRect];
 		UIImage *newImg = [UIImage imageWithCGImage:cgimg];
 		
 		UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
