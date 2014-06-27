@@ -111,7 +111,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     // IF TRUE THEN SAVE IMAGE TO CAMERA ROLL
     if([save isEqualToString:@"true"]){
-        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
     }
     
     // RELEASE OUR IMAGE AND DONE
@@ -175,7 +175,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     NSString *save = [options objectForKey:@"save"];
     NSLog(@"SAVED: %@",save);
     if([save isEqualToString:@"true"]){
-        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
     }
     CGImageRelease(cgimg);
     
@@ -250,7 +250,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     NSString *save = [options objectForKey:@"save"];
     NSLog(@"SAVED: %@",save);
         if([save isEqualToString:@"true"]){
-        UIImageWriteToSavedPhotosAlbum(newImg, self,@selector(image:didFinishSavingWithError:contextInfo:), nil);
+        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
     }
     
     CGImageRelease(cgimg);
@@ -397,22 +397,5 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"nope"];
 		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 	}
-}
-
-// CAMERA ROLL SAVER
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error 
-  contextInfo:(void *)contextInfo
-{
-    // Was there an error?
-    if (error != NULL)
-    {
-        // Show error message...
-        NSLog(@"ERROR: %@",error);
-    }
-    else  // No errors
-    {
-        // Show message image successfully saved
-        NSLog(@"IMAGE SAVED!");
-    }
 }
 @end
