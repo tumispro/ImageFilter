@@ -369,7 +369,8 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 							nil];
 		CIImage *outputImage = [filter outputImage];
 		
-		CGImageRef cgimg = CGImageCreateWithImageInRect([outputImage CGImage], cropRect);//[context createCGImage:outputImage fromRect:[outputImage extent]];
+		CGImageRef cgimgO = [context createCGImage:outputImage fromRect:[outputImage extent]];
+		CGImageRef cgimg = CGImageCreateWithImageInRect(cgimgO, cropRect);
 		UIImage *newImg = [UIImage imageWithCGImage:cgimg];
 		
 		UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
@@ -394,6 +395,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 		//NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
 	
+		CGImageRelease(cgimgO);
 		CGImageRelease(cgimg);
 	
 		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
