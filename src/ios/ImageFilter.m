@@ -133,11 +133,19 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)stark:(CDVInvokedUrlCommand*)command;
 {
-    NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+    // get options
+	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
+
+	// get file path
+	NSString *filePath = [options objectForKey:@"image"];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *oDocumentsPath = [paths objectAtIndex:0];
+	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
-    NSString *filePath = [options objectForKey:@"image"];
-    NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
-    
+	// convert file path to imageurl
+	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
+	
+	// do the filtering
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
@@ -156,13 +164,13 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     CIImage *outputImageB = [filterB outputImage];
     
-    CGImageRef cgimg = 
-    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
+    // convert the filtered image to a UIImage
+    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
-	
+    
+	// store the file in the docs directory
 	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
+	NSString *documentsPath = [paths objectAtIndex:0];
 	
     int r = arc4random() % 5000;
 	NSString *random = [NSString stringWithFormat:@"%d", r];
@@ -172,35 +180,34 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     [imageData writeToFile:filePathB atomically:YES];
     
+	// save the file if requested
     NSString *save = [options objectForKey:@"save"];
-    NSLog(@"SAVED: %@",save);
     if([save isEqualToString:@"true"]){
         UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
     }
+	
+	//release the image
     CGImageRelease(cgimg);
     
-    // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    /*self.callbackID = [arguments pop];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];*/
-    
-    /* Create JS to call the success function with the result */
-   // NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
-    /* Output the script */
-    //[self writeJavascript:successScript];
-	
+	//callback with path
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 -(void)sunnySide:(CDVInvokedUrlCommand*)command;
 {
+	// get options
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
 
-    // FILTER
-    NSString *filePath = [options objectForKey:@"image"];
-    NSURL *fileNameAndPath = [NSURL URLWithString:filePath];
-    
+	// get file path
+	NSString *filePath = [options objectForKey:@"image"];
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *oDocumentsPath = [paths objectAtIndex:0];
+	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
+	
+	// convert file path to imageurl
+	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
+	
+	// do the filtering
     CIImage *beginImage = 
     [CIImage imageWithContentsOfURL:fileNameAndPath];
     CIContext *context = [CIContext contextWithOptions:nil];
@@ -218,26 +225,13 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
                         nil];
     CIImage *outputImageB = [filterB outputImage];
     
-    /*NSString *bgPath = 
-    [[NSBundle mainBundle] pathForResource:@"painter" ofType:@"png"];
-    NSURL *bgPathName = [NSURL fileURLWithPath:bgPath];
-    
-    CIImage *bgIMG = 
-    [CIImage imageWithContentsOfURL:bgPathName];
-    
-    CIFilter *filterD = [CIFilter filterWithName:@"CISourceOverCompositing" 
-                                   keysAndValues: kCIInputImageKey, bgIMG, 
-                         @"inputBackgroundImage",outputImageB,
-                         nil];
-    CIImage *outputImageD = [filterD outputImage];*/
-    
-    CGImageRef cgimg = 
-    [context createCGImage:outputImageB fromRect:[outputImageB extent]];
+    // convert the filtered image to a UIImage
+    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
     UIImage *newImg = [UIImage imageWithCGImage:cgimg];
     
-    NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-	NSString *documentsPath = [paths objectAtIndex:0]; //Get the docs directory 
+	// store the file in the docs directory
+	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+	NSString *documentsPath = [paths objectAtIndex:0];
 	
     int r = arc4random() % 5000;
 	NSString *random = [NSString stringWithFormat:@"%d", r];
@@ -247,28 +241,18 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     
     [imageData writeToFile:filePathB atomically:YES];
     
+	// save the file if requested
     NSString *save = [options objectForKey:@"save"];
-    NSLog(@"SAVED: %@",save);
-        if([save isEqualToString:@"true"]){
+    if([save isEqualToString:@"true"]){
         UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
     }
-    
+	
+	//release the image
     CGImageRelease(cgimg);
     
-    // CALLBACK TO JAVASCRIPT WITH IMAGE URI
-    /*self.callbackID = [arguments pop];
-    
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK 
-                                                messageAsString:filePathB];*/
-    
-    /* Create JS to call the success function with the result */
-    //NSString *successScript = [pluginResult toSuccessCallbackString:self.callbackID];
-    /* Output the script */
-    //[self writeJavascript:successScript];
-	
+	//callback with path
 	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-    
 }
 -(void)worn:(CDVInvokedUrlCommand*)command;
 {
@@ -339,63 +323,63 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 }
 -(void)vintage:(CDVInvokedUrlCommand*)command;
 {
+	// get options
 	NSMutableDictionary* options = [command.arguments objectAtIndex:0];
-    NSString *filePath = [options objectForKey:@"image"];
-	
+
+	// get file path
+	NSString *filePath = [options objectForKey:@"image"];
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 	NSString *oDocumentsPath = [paths objectAtIndex:0];
-	
 	oDocumentsPath = [oDocumentsPath stringByAppendingString:filePath];
 	
+	// convert file path to imageurl
+	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
 	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
+	// do the filtering
+    CIImage *beginImage = 
+    [CIImage imageWithContentsOfURL:fileNameAndPath];
+    CIContext *context = [CIContext contextWithOptions:nil];
+    
+    CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
+                                  keysAndValues: kCIInputImageKey, beginImage, 
+                        @"inputColor",[CIColor colorWithRed:121 green:195 blue:219 alpha:1],
+                        nil];
+    CIImage *outputImage = [filter outputImage];
+    
+    CIFilter *filterB = [CIFilter filterWithName:@"CIColorControls" 
+                                   keysAndValues: kCIInputImageKey, outputImage, 
+                         @"inputSaturation", [NSNumber numberWithFloat:.6],
+                         @"inputContrast", [NSNumber numberWithFloat:1.1], 
+                         nil];
+    CIImage *outputImageB = [filterB outputImage];
+    
+    // convert the filtered image to a UIImage
+    CGImageRef cgimg = [context createCGImage:outputImageC fromRect:[outputImageB extent]];
+    UIImage *newImg = [UIImage imageWithCGImage:cgimg];
+    
+	// store the file in the docs directory
+	NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
+	NSString *documentsPath = [paths objectAtIndex:0];
 	
-	if ([fileManager fileExistsAtPath:oDocumentsPath]){ 
-		NSURL *imageURL = [NSURL fileURLWithPath:oDocumentsPath];
-		
-		CIImage *beginImage = [CIImage imageWithContentsOfURL:imageURL];
-		CIContext *context = [CIContext contextWithOptions:nil];
-		
-		CIFilter *filter = [CIFilter filterWithName:@"CIWhitePointAdjust" 
-									  keysAndValues: kCIInputImageKey, beginImage, 
-							@"inputColor",[CIColor colorWithRed:212 green:235 blue:241 alpha:1],
-							nil];
-		CIImage *outputImage = [filter outputImage];
-		
-		CGImageRef cgimg = [context createCGImage:outputImage fromRect:[outputImage extent]];
-		UIImage *newImg = [UIImage imageWithCGImage:cgimg];
-		
-		UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
-		
-		NSData *imageData = UIImageJPEGRepresentation(newImg,1.0);
-		
-		NSString *documentsPath = [paths objectAtIndex:0];
-		
-		int r = arc4random() % 5000;
-		NSString *random = [NSString stringWithFormat:@"%d", r];
-		NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
-		NSString *tPathB = [tPathA stringByAppendingString:random];
-		NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
-		
-		[imageData writeToFile:filePathB atomically:YES];
-		
-		
-		//NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
-		
-		//UIImage *image = [UIImage imageWithData:imageData];
-		//UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    int r = arc4random() % 5000;
+	NSString *random = [NSString stringWithFormat:@"%d", r];
+	NSString *tPathA = [documentsPath stringByAppendingPathComponent:@"vintage"];
+	NSString *tPathB = [tPathA stringByAppendingString:random];
+	NSString *filePathB = [tPathB stringByAppendingString:@".jpg"];
+    
+    [imageData writeToFile:filePathB atomically:YES];
+    
+	// save the file if requested
+    NSString *save = [options objectForKey:@"save"];
+    if([save isEqualToString:@"true"]){
+        UIImageWriteToSavedPhotosAlbum(newImg, nil, nil, nil);
+    }
 	
-		//NSString *myString = [[NSString alloc] initWithData:imageData encoding:NSUTF8StringEncoding];
-	
-		CGImageRelease(cgimg);
-	
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
-	else
-	{
-		CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"nope"];
-		[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
-	}
+	//release the image
+    CGImageRelease(cgimg);
+    
+	//callback with path
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
+	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 @end
