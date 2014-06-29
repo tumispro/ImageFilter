@@ -144,7 +144,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	// convert file path to imageurl
 	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
-	//NSURL *fileNameAndPath = [NSURL URLWithString:@"http://www.the-word.com/filter_image.jpg"]; 
 	
 	// do the filtering
     CIImage *beginImage = 
@@ -207,7 +206,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	// convert file path to imageurl
 	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
-	//NSURL *fileNameAndPath = [NSURL URLWithString:@"http://www.the-word.com/filter_image.jpg"];
 	
 	// do the filtering
     CIImage *beginImage = 
@@ -269,7 +267,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	// convert file path to imageurl
 	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
-	//NSURL *fileNameAndPath = [NSURL URLWithString:@"http://www.the-word.com/filter_image.jpg"];
 	
 	// do the filtering
     CIImage *beginImage = [CIImage imageWithContentsOfURL:fileNameAndPath];
@@ -337,7 +334,6 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
 	
 	// convert file path to imageurl
 	NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];  
-	//NSURL *fileNameAndPath = [NSURL URLWithString:@"http://www.the-word.com/filter_image.jpg"];
 	
 	// do the filtering
     CIImage *beginImage = 
