@@ -251,7 +251,7 @@ Copyright (c) 2012 Drew Dahlman MIT LICENSE
     CGImageRelease(cgimg);
     
 	//callback with path
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[fileNameAndPath absoluteString]];
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:filePathB];
 	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 -(void)worn:(CDVInvokedUrlCommand*)command;
