@@ -4,12 +4,12 @@ import org.json.JSONArray;
 
 import android.util.Log;
 
-import com.phonegap.api.Plugin;
-import com.phonegap.api.PluginResult;
-import com.phonegap.api.PluginResult.Status;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
+import org.apache.cordova.PluginResult.Status;
 
 
-public class ImageFilter extends Plugin {
+public class ImageFilter extends CordovaPlugin {
 	
 	@Override
 	public PluginResult execute(String action, JSONArray optionsArr, String callBackId){
