@@ -134,11 +134,10 @@ public class Filters{
 			canvas.drawBitmap(none,0,0,null);
 			
 			// BORDER
-			Context context = MyApplication.getAppContext();
-			Bitmap border = BitmapFactory.decodeResource(context.getResources(),R.drawable.painter);
+			//Context context = MyApplication.getAppContext();
+			//Bitmap border = BitmapFactory.decodeResource(context.getResources(),R.drawable.painter);
 			
-			
-			canvas.drawBitmap(border,0,0,null);
+			//canvas.drawBitmap(border,0,0,null);
 			
 			Paint spaint = new Paint();
 		    ColorMatrix scm = new ColorMatrix();
@@ -257,10 +256,10 @@ public class Filters{
 		    
 		    // BORDER
 		    
-			Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.painter);
-			Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
+			//Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.painter);
+			//Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
 			
-			canvas.drawBitmap(scaledBorder,0,0,null);
+			//canvas.drawBitmap(scaledBorder,0,0,null);
 			
 			
 			// SAVE IMAGE
@@ -335,10 +334,10 @@ public class Filters{
 		    
 		    // BORDER
 		    
-			Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.vignette3);
-			Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
+			//Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.vignette3);
+			//Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
 			
-			canvas.drawBitmap(scaledBorder,0,0,null);
+			//canvas.drawBitmap(scaledBorder,0,0,null);
 			
 			
 			// SAVE IMAGE
@@ -423,10 +422,10 @@ public class Filters{
 		    
 		    // BORDER
 		    
-			Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.blackframe);
-			Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
+			//Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.blackframe);
+			//Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
 			
-			canvas.drawBitmap(scaledBorder,0,0,null);
+			//canvas.drawBitmap(scaledBorder,0,0,null);
 			
 			
 			// SAVE IMAGE
@@ -511,10 +510,10 @@ public class Filters{
 		    
 		    // BORDER
 		    
-			Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.vignette4);
-			Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
+			//Bitmap border = BitmapFactory.decodeResource(App.context.getResources(),R.drawable.vignette4);
+			//Bitmap scaledBorder = Bitmap.createScaledBitmap(border,655,655,false);
 			
-			canvas.drawBitmap(scaledBorder,0,0,null);
+			//canvas.drawBitmap(scaledBorder,0,0,null);
 			
 			
 			// SAVE IMAGE
