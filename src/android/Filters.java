@@ -1,4 +1,4 @@
-package com.phonegap.plugins.imageFilter;
+package com.plugin.imageFilter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import android.util.Log;
@@ -10,7 +10,7 @@ import android.graphics.*;
 import android.os.*;
 
 // CHANGE THIS TO YOUR PROJECT
-import com.drewdahlman.ImageFilter.*;
+import com.plugin.imageFilter.*;
 
 public class Filters{
 	

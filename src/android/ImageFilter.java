@@ -1,4 +1,4 @@
-package com.phonegap.plugins.imageFilter;
+package com.plugin.imageFilter;
 
 import org.json.JSONArray;
 
