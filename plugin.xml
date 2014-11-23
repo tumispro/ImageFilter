@@ -29,6 +29,7 @@
         
         <header-file src="src/ios/ImageFilter.h" />
         <source-file src="src/ios/ImageFilter.m" />
+        <framework src="CoreImage.framework" />
     </platform>
 	
 	<!-- android -->
