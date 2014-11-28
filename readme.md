@@ -7,4 +7,4 @@ ImageFilter is a phonegap / Cordova plugin that allows you to create instagram s
 <img src='https://dl.dropboxusercontent.com/u/14232597/IMG_1387.JPG' width='500'>
 
 
-Updated by <a href="http://www.reyez.nl">Reyez.nl</a>
+Updated by <a href="http://www.reyez.nl">Reyez!</a>
