@@ -153,7 +153,7 @@
     }
     
     // convert file path to imageurl
-    NSURL *fileNameAndPath = [NSURL fileURLWithPath:filePath];
+    NSURL *fileNameAndPath = [NSURL fileURLWithPath:oDocumentsPath];
     
     // do the filtering
     CIImage *beginImage =
